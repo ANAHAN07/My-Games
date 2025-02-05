@@ -3,7 +3,7 @@ import random       # Importing the randomize fuctions from "random" module.
 
 
 pygame.init()
-
+pygame.mixer.init()  # Initialize sound mixer
 
 WIDTH, HEIGHT = (1080, 720)          # Screen Resolution Setting.
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -34,7 +34,9 @@ font = pygame.font.Font(None, 36)   # Font.
 game_over_font = pygame.font.Font(None, 60)  # Larger Font.
 author_font = pygame.font.Font(None, 24)  # Font for Author.
 
-
+# Load sound effects
+catch_sound = pygame.mixer.Sound("beep.wav")
+fail_sound = pygame.mixer.Sound("fail.wav")
 
 running = True              # Game running in Loop.
 while running:
@@ -57,6 +59,7 @@ while running:
     
     if ball_y + ball_radius >= player_cursor_y and player_cursor_x < ball_x < player_cursor_x + player_cursor_width:    # Check's if the ball has hitted by the player_cursor.
         score += 1      # If hitted the the score will be counted as 1.
+        catch_sound.play()  # Play sound when ball is caught
 
         
         if score % 10 == 0:
@@ -68,6 +71,7 @@ while running:
 
 
     if ball_y > HEIGHT:             # If the ball misses the player_cursor.
+        fail_sound.play()  # Play sound on game over
         screen.fill(WHITE)      # Background will be White.
 
         
